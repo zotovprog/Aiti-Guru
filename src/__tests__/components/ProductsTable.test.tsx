@@ -3,11 +3,36 @@ import { render, screen } from '@testing-library/react'
 import { ProductsTable } from '@/components/products/ProductsTable'
 import type { Product } from '@/types/product.types'
 
+function createMockProduct(overrides: Partial<Product> & { id: number; title: string }): Product {
+  return {
+    description: '',
+    category: '',
+    price: 0,
+    discountPercentage: 0,
+    rating: 0,
+    stock: 0,
+    brand: '',
+    sku: '',
+    weight: 0,
+    dimensions: { width: 0, height: 0, depth: 0 },
+    warrantyInformation: '',
+    shippingInformation: '',
+    availabilityStatus: '',
+    reviews: [],
+    returnPolicy: '',
+    minimumOrderQuantity: 1,
+    meta: { createdAt: '', updatedAt: '', barcode: '', qrCode: '' },
+    images: [],
+    thumbnail: '',
+    tags: [],
+    ...overrides,
+  }
+}
+
 const mockProducts: Product[] = [
-  {
+  createMockProduct({
     id: 1,
     title: 'Тестовый товар',
-    description: 'Описание',
     category: 'Электроника',
     price: 1500,
     discountPercentage: 10,
@@ -16,13 +41,10 @@ const mockProducts: Product[] = [
     brand: 'TestBrand',
     sku: 'SKU-001',
     thumbnail: 'https://example.com/thumb.jpg',
-    images: [],
-    tags: [],
-  },
-  {
+  }),
+  createMockProduct({
     id: 2,
     title: 'Товар с низким рейтингом',
-    description: 'Описание 2',
     category: 'Одежда',
     price: 300,
     discountPercentage: 5,
@@ -31,9 +53,7 @@ const mockProducts: Product[] = [
     brand: 'LowBrand',
     sku: 'SKU-002',
     thumbnail: 'https://example.com/thumb2.jpg',
-    images: [],
-    tags: [],
-  },
+  }),
 ]
 
 const defaultProps = {

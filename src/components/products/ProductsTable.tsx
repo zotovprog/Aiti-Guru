@@ -175,14 +175,14 @@ export function ProductsTable({
         onChange={handleTableChange}
         rowSelection={{
           selectedRowKeys,
-          onChange: (keys) => setSelectedRowKeys(keys),
+          onChange: (keys) => setSelectedRowKeys(keys as Array<string | number>),
         }}
         pagination={{
           current: currentPage,
           pageSize,
           total,
           showSizeChanger: false,
-          placement: 'bottomRight',
+          placement: ['bottomEnd'],
         }}
         locale={{
           emptyText: (

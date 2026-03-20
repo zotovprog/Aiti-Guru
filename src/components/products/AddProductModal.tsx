@@ -57,7 +57,7 @@ export function AddProductModal({ open, onClose, onSubmit }: AddProductModalProp
 
           <div className="form-field">
             <label htmlFor="price">Цена</label>
-            <input id="price" type="number" step="0.01" {...register('price')} />
+            <input id="price" type="number" step="0.01" {...register('price', { valueAsNumber: true })} />
             {errors.price ? <p role="alert">{errors.price.message}</p> : null}
           </div>
 

@@ -4,6 +4,13 @@ import type { RefreshResponse } from '@/types/auth.types'
 import { getToken, setToken, clearTokens } from '@/utils/storage'
 import { STORAGE_KEYS, API_BASE_URL } from '@/utils/constants'
 
+declare module 'axios' {
+  interface InternalAxiosRequestConfig {
+    _retry?: boolean
+    _authTokenOverride?: string
+  }
+}
+
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -16,24 +23,16 @@ interface QueuedRequest {
   reject: (error: unknown) => void
 }
 
-interface RetryableRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean
-  _authTokenOverride?: string
-}
-
 let isRefreshing = false
 let queuedRequests: QueuedRequest[] = []
 
-function setAuthorizationHeader(config: RetryableRequestConfig, token: string): void {
+function setAuthorizationHeader(config: InternalAxiosRequestConfig, token: string): void {
   if (config.headers?.set) {
     config.headers.set('Authorization', `Bearer ${token}`)
     return
   }
 
-  config.headers = {
-    ...config.headers,
-    Authorization: `Bearer ${token}`,
-  }
+  ;(config.headers as Record<string, string>)['Authorization'] = `Bearer ${token}`
 }
 
 function flushQueuedRequests(error: unknown, token: string | null = null): void {
@@ -55,7 +54,7 @@ function redirectToLogin(): void {
   }
 }
 
-async function retryRequestWithToken(config: RetryableRequestConfig, accessToken: string) {
+async function retryRequestWithToken(config: InternalAxiosRequestConfig, accessToken: string) {
   config._authTokenOverride = accessToken
 
   try {
@@ -88,7 +87,7 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as RetryableRequestConfig | undefined
+    const originalRequest = error.config as InternalAxiosRequestConfig | undefined
     const requestUrl = originalRequest?.url ?? ''
     const isAuthRequest = requestUrl.includes('/auth/login') || requestUrl.includes('/auth/refresh')
 
