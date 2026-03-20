@@ -2,6 +2,7 @@
 
 ![CI](https://github.com/zotovprog/Aiti-Guru/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/zotovprog/Aiti-Guru/actions/workflows/deploy.yml/badge.svg)
+![Release](https://img.shields.io/github/v/release/zotovprog/Aiti-Guru?label=Release)
 
 Тестовое задание для компании [Aiti Guru](https://i-t-p.pro). React-приложение с авторизацией и таблицей товаров на базе DummyJSON API.
 
