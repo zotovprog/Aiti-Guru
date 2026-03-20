@@ -21,3 +21,13 @@
 - **web-artifacts-builder** — сборка React-артефактов (init-artifact.sh + bundle-artifact.sh)
 - **canvas-design** — дизайн на canvas
 - **theme-factory** — генерация тем
+
+## Локализация
+- Все релизы, документация, README, описания PR — **на русском языке**
+- Коммиты — на английском (conventional commits)
+- GitHub Release notes — на русском
+
+## Деплой
+- Production: https://aiti-guru-production.up.railway.app
+- Автодеплой через GitHub Actions: CI → Deploy → Release
+- Railway Project Token хранится в GitHub Secrets (`RAILWAY_TOKEN`)
