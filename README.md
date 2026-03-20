@@ -6,6 +6,10 @@
 
 Тестовое задание для компании [Aiti Guru](https://i-t-p.pro). React-приложение с авторизацией и таблицей товаров на базе DummyJSON API.
 
+**Демо:** [https://aiti-guru-production.up.railway.app](https://aiti-guru-production.up.railway.app)
+
+Деплой автоматически выполняется на Railway при каждом push в `main` через GitHub Actions (CI → Deploy → Release).
+
 ---
 
 ## Стек технологий
